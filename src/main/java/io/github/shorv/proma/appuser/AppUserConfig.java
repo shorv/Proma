@@ -1,5 +1,6 @@
 package io.github.shorv.proma.appuser;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,11 @@ import java.util.List;
 
 @Configuration
 public class AppUserConfig {
+
+    @Bean
+    public ModelMapper modelMapper(){
+        return new ModelMapper();
+    }
 
     @Bean
     public CommandLineRunner commandLineRunner(AppUserRepository appUserRepository) {

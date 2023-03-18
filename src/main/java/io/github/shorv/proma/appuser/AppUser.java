@@ -38,7 +38,7 @@ public class AppUser {
             joinColumns = {@JoinColumn(name = "appuser_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "employee_id", referencedColumnName = "id")})
     @MapKeyJoinColumn(name = "organization_id")
-    private Map<Organization, Employee> employeeByOrganization;
+    private Map<Organization, Employee> employeeByOrganization = new HashMap<>();
 
     public AppUser(String username, String password, String firstName, String lastName, String email) {
         this.username = username;
