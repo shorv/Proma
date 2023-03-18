@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Entity
@@ -38,4 +39,13 @@ public class AppUser {
             inverseJoinColumns = {@JoinColumn(name = "employee_id", referencedColumnName = "id")})
     @MapKeyJoinColumn(name = "organization_id")
     private Map<Organization, Employee> employeeByOrganization;
+
+    public AppUser(String username, String password, String firstName, String lastName, String email) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.employeeByOrganization = new HashMap<>();
+    }
 }
