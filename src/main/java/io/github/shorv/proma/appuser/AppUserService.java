@@ -22,8 +22,8 @@ public class AppUserService {
                 .collect(Collectors.toList());
     }
 
-    public void createUser(AppUserDTO appUserDTO) {
-        appUserRepository.save(convertToEntity(appUserDTO));
+    public void createUser(AppUser appUser) {
+        appUserRepository.save(appUser);
     }
 
     private AppUserDTO convertToDto(AppUser appUser) {

@@ -20,15 +20,15 @@ public class AppUserController {
     private final AppUserService appUserService;
 
     @PostMapping()
-    public ResponseEntity<Long> createUser(@RequestBody AppUserDTO appUserDTO) {
-        appUserService.createUser(appUserDTO);
+    public ResponseEntity<Long> createUser(@RequestBody AppUser appUser) {
+        appUserService.createUser(appUser);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(appUserDTO.getId())
+                .buildAndExpand(appUser.getId())
                 .toUri();
 
         return ResponseEntity.created(uri)
-                .body(appUserDTO.getId());
+                .body(appUser.getId());
     }
 
     @GetMapping
