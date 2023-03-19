@@ -1,7 +1,6 @@
 package io.github.shorv.proma.organization.employee;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.shorv.proma.appuser.AppUser;
 import io.github.shorv.proma.organization.Organization;
 import io.github.shorv.proma.organization.Technology;
@@ -16,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,19 +33,24 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+
+    @OneToOne
     private AppUser appUser;
-    private String email;
-    @JsonBackReference
+
     @ManyToOne
+    @JsonIgnore
     private Organization organization;
+
+    @ManyToOne
+    @JsonIgnore
+    private Team team;
+
+    @ManyToMany
+    private Set<Task> tasks;
+
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<Technology> technologies;
-    @JsonBackReference
-    @ManyToOne
-    private Team team;
-    @JsonManagedReference
-    @ManyToMany
-    private Set<Task> tasks;
+
+    private String email;
 }

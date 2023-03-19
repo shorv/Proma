@@ -1,7 +1,6 @@
 package io.github.shorv.proma.organization.team;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.shorv.proma.organization.Organization;
 import io.github.shorv.proma.organization.employee.Employee;
 import io.github.shorv.proma.organization.task.Task;
@@ -29,17 +28,19 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JsonIgnore()
+    private Organization organization;
+
     @OneToOne
     private Employee leader;
-    @JsonBackReference
-    @ManyToOne
-    private Organization organization;
-    private String name;
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "team")
     private Set<Employee> employees;
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "team")
     private Set<Task> tasks;
 
+    private String name;
 }

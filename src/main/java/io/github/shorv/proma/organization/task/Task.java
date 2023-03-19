@@ -1,6 +1,6 @@
 package io.github.shorv.proma.organization.task;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.shorv.proma.organization.Organization;
 import io.github.shorv.proma.organization.TaskPriority;
 import io.github.shorv.proma.organization.employee.Employee;
@@ -31,19 +31,24 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @JsonBackReference
+
     @ManyToOne
+    @JsonIgnore
     private Organization organization;
-    @JsonBackReference
+
     @ManyToOne
+    @JsonIgnore
     private Team team;
-    @JsonBackReference
+
     @ManyToMany(mappedBy = "tasks")
+    @JsonIgnore
     private Set<Employee> employees;
-    private String name;
-    private String description;
+
     @Enumerated(EnumType.STRING)
     private TaskPriority priority;
+
+    private String name;
+    private String description;
     private LocalDateTime createdAt;
     private LocalDateTime deadline;
 }
