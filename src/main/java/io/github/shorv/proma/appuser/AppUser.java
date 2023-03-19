@@ -1,22 +1,18 @@
 package io.github.shorv.proma.appuser;
 
-import io.github.shorv.proma.organization.employee.Employee;
 import io.github.shorv.proma.organization.Organization;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.MapKeyJoinColumn;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -34,11 +30,9 @@ public class AppUser {
     private String lastName;
     private String email;
     @OneToMany
-    @JoinTable(name = "organization_employee_mapping",
-            joinColumns = {@JoinColumn(name = "appuser_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "employee_id", referencedColumnName = "id")})
-    @MapKeyJoinColumn(name = "organization_id")
-    private Map<Organization, Employee> employeeByOrganization = new HashMap<>();
+    private Set<Organization> ownedOrganizations;
+    @OneToMany
+    private Set<Organization> joinedOrganizations;
 
     public AppUser(String username, String password, String firstName, String lastName, String email) {
         this.username = username;
@@ -46,6 +40,7 @@ public class AppUser {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.employeeByOrganization = new HashMap<>();
+        this.ownedOrganizations = new LinkedHashSet<>();
+        this.joinedOrganizations = new LinkedHashSet<>();
     }
 }
