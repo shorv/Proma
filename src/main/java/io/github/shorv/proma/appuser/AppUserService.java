@@ -1,5 +1,6 @@
 package io.github.shorv.proma.appuser;
 
+import io.github.shorv.proma.appuser.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.expression.ParseException;
@@ -24,6 +25,31 @@ public class AppUserService {
 
     public void createUser(AppUser appUser) {
         appUserRepository.save(appUser);
+    }
+
+    public AppUserDTO getUserDTO(Long id) {
+        return convertToDto(appUserRepository.findById(id)
+                .orElseThrow(UserNotFoundException::new));
+    }
+
+    public AppUserDTO updateUser(Long id, AppUserDTO appUserDTO) {
+        AppUser userToUpdate = appUserRepository.findById(id)
+                .orElseThrow(UserNotFoundException::new);
+
+        userToUpdate.setEmail(appUserDTO.getEmail());
+        userToUpdate.setUsername(appUserDTO.getUsername());
+        userToUpdate.setFirstName(appUserDTO.getFirstName());
+        userToUpdate.setLastName(appUserDTO.getLastName());
+        userToUpdate.setOrganizations(appUserDTO.getOrganizations());
+        userToUpdate.setPassword(appUserDTO.getPassword());
+
+        appUserRepository.save(userToUpdate);
+
+        return convertToDto(userToUpdate);
+    }
+
+    public void deleteAppUser(Long id) {
+        appUserRepository.deleteById(id);
     }
 
     private AppUserDTO convertToDto(AppUser appUser) {
