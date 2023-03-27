@@ -23,8 +23,8 @@ public class AppUserService {
                 .collect(Collectors.toList());
     }
 
-    public void createUser(AppUser appUser) {
-        appUserRepository.save(appUser);
+    public void createUser(AppUserDTO appUserDTO) {
+        appUserRepository.save(convertToEntity(appUserDTO));
     }
 
     public AppUserDTO getUserDTO(Long id) {
