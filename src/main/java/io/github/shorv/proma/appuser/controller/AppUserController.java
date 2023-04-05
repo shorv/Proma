@@ -1,5 +1,7 @@
-package io.github.shorv.proma.appuser;
+package io.github.shorv.proma.appuser.controller;
 
+import io.github.shorv.proma.appuser.AppUserDTO;
+import io.github.shorv.proma.appuser.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

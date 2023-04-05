@@ -1,5 +1,6 @@
 package io.github.shorv.proma.organization;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.shorv.proma.appuser.AppUser;
 import io.github.shorv.proma.organization.employee.Employee;
 import io.github.shorv.proma.organization.task.Task;
@@ -25,11 +26,16 @@ import java.util.Set;
 @NoArgsConstructor
 public class Organization {
 
+    public Organization(String name) {
+        this.name = name;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
+    @JsonIgnore
     private AppUser owner;
 
     @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)

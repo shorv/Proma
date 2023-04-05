@@ -1,6 +1,7 @@
 package io.github.shorv.proma.appuser;
 
 import io.github.shorv.proma.organization.Organization;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +26,7 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Organization> organizations;
 
     private String username;
