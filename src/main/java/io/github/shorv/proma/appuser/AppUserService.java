@@ -3,6 +3,7 @@ package io.github.shorv.proma.appuser;
 import io.github.shorv.proma.appuser.exception.UserNotFoundException;
 import io.github.shorv.proma.organization.Organization;
 import io.github.shorv.proma.organization.OrganizationDTO;
+import io.github.shorv.proma.organization.exception.OrganizationAlreadyExistsException;
 import io.github.shorv.proma.organization.exception.OrganizationNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -29,6 +30,11 @@ public class AppUserService {
                 .filter(o -> o.getId().equals(organizationId))
                 .findAny()
                 .orElseThrow(OrganizationNotFoundException::new);
+    }
+
+    private boolean organizationExists(AppUser user, String organizationName) {
+        return user.getOrganizations().stream()
+                .anyMatch(o -> o.getName().equals(organizationName));
     }
 
     public List<AppUserDTO> getUsers() {
@@ -89,9 +95,14 @@ public class AppUserService {
 
     public void createOrganization(Long userId, OrganizationDTO organizationDTO) {
         AppUser user = getUser(userId);
+        if (organizationExists(user, organizationDTO.getName())) {
+            throw new OrganizationAlreadyExistsException();
+        }
+
         Organization organization = modelMapper.map(organizationDTO, Organization.class);
         organization.setOwner(user);
         user.getOrganizations().add(organization);
+
         appUserRepository.save(user);
     }
 
