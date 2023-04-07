@@ -17,6 +17,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -28,6 +29,9 @@ public class Organization {
 
     public Organization(String name) {
         this.name = name;
+        this.teams = new HashSet<>();
+        this.employees = new HashSet<>();
+        this.tasks = new HashSet<>();
     }
 
     @Id
