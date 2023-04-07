@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 public class OrganizationDTO {
     private Long id;
-    private AppUser owner;
+//    private AppUser owner;
     private Set<Team> teams;
     private Set<Employee> employees;
     private Set<Task> tasks;

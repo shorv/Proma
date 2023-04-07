@@ -63,7 +63,7 @@ public class OrganizationService {
         organization.setTasks(organizationDTO.getTasks());
         organization.setName(organizationDTO.getName());
         organization.setTeams(organizationDTO.getTeams());
-        organization.setOwner(organizationDTO.getOwner());
+//        organization.setOwner(organizationDTO.getOwner());
 
         organizationRepository.save(organization);
         return convertToDto(organization);
