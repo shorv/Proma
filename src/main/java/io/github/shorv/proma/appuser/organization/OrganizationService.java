@@ -1,6 +1,6 @@
-package io.github.shorv.proma.organization;
+package io.github.shorv.proma.appuser.organization;
 
-import io.github.shorv.proma.organization.exception.OrganizationNotFoundException;
+import io.github.shorv.proma.appuser.organization.exception.OrganizationNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.expression.ParseException;

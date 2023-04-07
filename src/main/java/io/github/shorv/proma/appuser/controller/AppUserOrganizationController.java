@@ -3,7 +3,7 @@ package io.github.shorv.proma.appuser.controller;
 import io.github.shorv.proma.appuser.AppUser;
 import io.github.shorv.proma.appuser.AppUserDTO;
 import io.github.shorv.proma.appuser.AppUserService;
-import io.github.shorv.proma.organization.OrganizationDTO;
+import io.github.shorv.proma.appuser.organization.OrganizationDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

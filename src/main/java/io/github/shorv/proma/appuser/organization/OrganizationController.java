@@ -1,4 +1,4 @@
-package io.github.shorv.proma.organization;
+package io.github.shorv.proma.appuser.organization;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

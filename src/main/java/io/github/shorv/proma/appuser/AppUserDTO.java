@@ -1,6 +1,6 @@
 package io.github.shorv.proma.appuser;
 
-import io.github.shorv.proma.organization.Organization;
+import io.github.shorv.proma.appuser.organization.Organization;
 import lombok.Getter;
 import lombok.Setter;
 

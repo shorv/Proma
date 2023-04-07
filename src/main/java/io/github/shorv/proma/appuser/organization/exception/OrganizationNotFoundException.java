@@ -1,4 +1,4 @@
-package io.github.shorv.proma.organization.exception;
+package io.github.shorv.proma.appuser.organization.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

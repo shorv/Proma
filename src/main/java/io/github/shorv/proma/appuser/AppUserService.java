@@ -1,10 +1,10 @@
 package io.github.shorv.proma.appuser;
 
 import io.github.shorv.proma.appuser.exception.UserNotFoundException;
-import io.github.shorv.proma.organization.Organization;
-import io.github.shorv.proma.organization.OrganizationDTO;
-import io.github.shorv.proma.organization.exception.OrganizationAlreadyExistsException;
-import io.github.shorv.proma.organization.exception.OrganizationNotFoundException;
+import io.github.shorv.proma.appuser.organization.Organization;
+import io.github.shorv.proma.appuser.organization.OrganizationDTO;
+import io.github.shorv.proma.appuser.organization.exception.OrganizationAlreadyExistsException;
+import io.github.shorv.proma.appuser.organization.exception.OrganizationNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.expression.ParseException;

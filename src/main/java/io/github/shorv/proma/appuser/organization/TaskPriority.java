@@ -1,4 +1,4 @@
-package io.github.shorv.proma.organization;
+package io.github.shorv.proma.appuser.organization;
 
 public enum TaskPriority {
     LOW,
