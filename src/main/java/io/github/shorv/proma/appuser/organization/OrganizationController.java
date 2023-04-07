@@ -1,9 +1,5 @@
 package io.github.shorv.proma.appuser.organization;
 
-import io.github.shorv.proma.appuser.AppUser;
-import io.github.shorv.proma.appuser.AppUserDTO;
-import io.github.shorv.proma.appuser.AppUserService;
-import io.github.shorv.proma.appuser.organization.OrganizationDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,11 +20,11 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/user/{userId}/organization")
 public class OrganizationController {
 
-    private final AppUserService appUserService;
+    private final OrganizationService organizationService;
 
     @PostMapping()
     public ResponseEntity<OrganizationDTO> createUserOrganization(@PathVariable Long userId, @RequestBody OrganizationDTO organizationDTO) {
-        appUserService.createOrganization(userId, organizationDTO);
+        organizationService.createOrganization(userId, organizationDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{organizationId}")
                 .buildAndExpand(organizationDTO.getId())
@@ -41,25 +37,24 @@ public class OrganizationController {
 
     @GetMapping
     public ResponseEntity<List<OrganizationDTO>> getUserOrganizations(@PathVariable Long userId) {
-        List<OrganizationDTO> organizations = appUserService.getOrganizations(userId);
+        List<OrganizationDTO> organizations = organizationService.getOrganizations(userId);
         return ResponseEntity.ok(organizations);
     }
 
     @GetMapping("/{organizationId}")
     public ResponseEntity<OrganizationDTO> getUserOrganization(@PathVariable Long userId, @PathVariable Long organizationId) {
-        OrganizationDTO organization = appUserService.getOrganization(userId, organizationId);
+        OrganizationDTO organization = organizationService.getOrganization(userId, organizationId);
         return ResponseEntity.ok(organization);
     }
 
     @PutMapping("/{organizationId}")
-    public ResponseEntity<AppUserDTO> updateUserOrganization(@PathVariable Long userId, @PathVariable Long organizationId, @RequestBody OrganizationDTO organizationDTO) {
-        AppUser user = appUserService.getUser(userId);
-        AppUserDTO updatedUser = appUserService.updateOrganization(user, organizationId, organizationDTO);
-        return ResponseEntity.ok(updatedUser);
+    public ResponseEntity<OrganizationDTO> updateUserOrganization(@PathVariable Long userId, @PathVariable Long organizationId, @RequestBody OrganizationDTO organizationDTO) {
+        OrganizationDTO updatedOrganization = organizationService.updateOrganization(userId, organizationId, organizationDTO);
+        return ResponseEntity.ok(updatedOrganization);
     }
 
     @DeleteMapping("/{organizationId}")
-    public void deleteUserOrganization(@PathVariable Long userId, @PathVariable Long organizationId){
-        appUserService.deleteUserOrganization(userId, organizationId);
+    public void deleteUserOrganization(@PathVariable Long userId, @PathVariable Long organizationId) {
+        organizationService.deleteOrganization(userId, organizationId);
     }
 }

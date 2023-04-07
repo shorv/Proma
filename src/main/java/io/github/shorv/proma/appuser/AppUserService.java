@@ -2,10 +2,9 @@ package io.github.shorv.proma.appuser;
 
 import io.github.shorv.proma.appuser.exception.UserNotFoundException;
 import io.github.shorv.proma.appuser.organization.Organization;
-import io.github.shorv.proma.appuser.organization.OrganizationDTO;
-import io.github.shorv.proma.appuser.organization.exception.OrganizationAlreadyExistsException;
 import io.github.shorv.proma.appuser.organization.exception.OrganizationNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.modelmapper.ModelMapper;
 import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
@@ -17,6 +16,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class AppUserService {
 
+    @Getter
     private final AppUserRepository appUserRepository;
     private final ModelMapper modelMapper;
 
@@ -32,7 +32,7 @@ public class AppUserService {
                 .orElseThrow(OrganizationNotFoundException::new);
     }
 
-    private boolean organizationExists(AppUser user, String organizationName) {
+    public boolean hasOrganization(AppUser user, String organizationName) {
         return user.getOrganizations().stream()
                 .anyMatch(o -> o.getName().equals(organizationName));
     }
@@ -76,53 +76,5 @@ public class AppUserService {
 
     private AppUser convertToEntity(AppUserDTO appUserDTO) throws ParseException {
         return modelMapper.map(appUserDTO, AppUser.class);
-    }
-
-    public List<OrganizationDTO> getOrganizations(Long userId) {
-        AppUser user = getUser(userId);
-        return user.getOrganizations()
-                .stream()
-                .map(organization -> modelMapper.map(organization, OrganizationDTO.class))
-                .collect(Collectors.toList());
-    }
-
-    public OrganizationDTO getOrganization(Long userId, Long organizationId) {
-        AppUser user = getUser(userId);
-        Organization organization = getUserOrganization(user, organizationId);
-
-        return modelMapper.map(organization, OrganizationDTO.class);
-    }
-
-    public void createOrganization(Long userId, OrganizationDTO organizationDTO) {
-        AppUser user = getUser(userId);
-        if (organizationExists(user, organizationDTO.getName())) {
-            throw new OrganizationAlreadyExistsException();
-        }
-
-        Organization organization = modelMapper.map(organizationDTO, Organization.class);
-        organization.setOwner(user);
-        user.getOrganizations().add(organization);
-
-        appUserRepository.save(user);
-    }
-
-    public AppUserDTO updateOrganization(AppUser user, Long organizationId, OrganizationDTO organizationDTO) {
-        Organization organization = getUserOrganization(user, organizationId);
-        organization.setEmployees(organizationDTO.getEmployees());
-        organization.setTasks(organizationDTO.getTasks());
-        organization.setName(organizationDTO.getName());
-        organization.setTeams(organizationDTO.getTeams());
-        organization.setOwner(organizationDTO.getOwner());
-
-        appUserRepository.save(user);
-        return convertToDto(user);
-    }
-
-    public void deleteUserOrganization(Long userId, Long organizationId) {
-        AppUser user = getUser(userId);
-        Organization userOrganization = getUserOrganization(user, organizationId);
-        user.getOrganizations().remove(userOrganization);
-
-        appUserRepository.save(user);
     }
 }
