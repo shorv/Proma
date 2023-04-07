@@ -1,4 +1,4 @@
-package io.github.shorv.proma.appuser.controller;
+package io.github.shorv.proma.appuser;
 
 import io.github.shorv.proma.appuser.AppUserDTO;
 import io.github.shorv.proma.appuser.AppUserService;

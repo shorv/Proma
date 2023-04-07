@@ -1,5 +1,9 @@
 package io.github.shorv.proma.appuser.organization;
 
+import io.github.shorv.proma.appuser.AppUser;
+import io.github.shorv.proma.appuser.AppUserDTO;
+import io.github.shorv.proma.appuser.AppUserService;
+import io.github.shorv.proma.appuser.organization.OrganizationDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,43 +21,45 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(path = "/api/v1/organization")
+@RequestMapping(path = "/api/v1/user/{userId}/organization")
 public class OrganizationController {
 
-    private final OrganizationService organizationService;
+    private final AppUserService appUserService;
 
     @PostMapping()
-    public ResponseEntity<OrganizationDTO> createOrganization(@RequestBody OrganizationDTO organizationDTO) {
-        organizationService.createOrganization(organizationDTO);
+    public ResponseEntity<OrganizationDTO> createUserOrganization(@PathVariable Long userId, @RequestBody OrganizationDTO organizationDTO) {
+        appUserService.createOrganization(userId, organizationDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
+                .path("/{organizationId}")
                 .buildAndExpand(organizationDTO.getId())
                 .toUri();
 
+        //FIXME Returned organization id is null - after that response it has appropriate value
         return ResponseEntity.created(uri)
                 .body(organizationDTO);
     }
 
     @GetMapping
-    public ResponseEntity<List<OrganizationDTO>> getOrganizations() {
-        List<OrganizationDTO> organizations = organizationService.getOrganizations();
+    public ResponseEntity<List<OrganizationDTO>> getUserOrganizations(@PathVariable Long userId) {
+        List<OrganizationDTO> organizations = appUserService.getOrganizations(userId);
         return ResponseEntity.ok(organizations);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<OrganizationDTO> getOrganizationById(@PathVariable Long id){
-        OrganizationDTO organization = organizationService.getOrganizationById(id);
+    @GetMapping("/{organizationId}")
+    public ResponseEntity<OrganizationDTO> getUserOrganization(@PathVariable Long userId, @PathVariable Long organizationId) {
+        OrganizationDTO organization = appUserService.getOrganization(userId, organizationId);
         return ResponseEntity.ok(organization);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<OrganizationDTO> updateOrganization(@PathVariable Long id, @RequestBody OrganizationDTO organizationDTO){
-        OrganizationDTO updateOrganization = organizationService.updateOrganization(id, organizationDTO);
-        return ResponseEntity.ok(updateOrganization);
+    @PutMapping("/{organizationId}")
+    public ResponseEntity<AppUserDTO> updateUserOrganization(@PathVariable Long userId, @PathVariable Long organizationId, @RequestBody OrganizationDTO organizationDTO) {
+        AppUser user = appUserService.getUser(userId);
+        AppUserDTO updatedUser = appUserService.updateOrganization(user, organizationId, organizationDTO);
+        return ResponseEntity.ok(updatedUser);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteOrganization(@PathVariable Long id){
-        organizationService.deleteOrganization(id);
+    @DeleteMapping("/{organizationId}")
+    public void deleteUserOrganization(@PathVariable Long userId, @PathVariable Long organizationId){
+        appUserService.deleteUserOrganization(userId, organizationId);
     }
 }
