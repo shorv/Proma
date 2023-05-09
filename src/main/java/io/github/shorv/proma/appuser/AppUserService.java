@@ -1,8 +1,8 @@
 package io.github.shorv.proma.appuser;
 
 import io.github.shorv.proma.appuser.exception.UserNotFoundException;
-import io.github.shorv.proma.appuser.organization.Organization;
-import io.github.shorv.proma.appuser.organization.exception.OrganizationNotFoundException;
+import io.github.shorv.proma.organization.Organization;
+import io.github.shorv.proma.organization.exception.OrganizationNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.modelmapper.ModelMapper;

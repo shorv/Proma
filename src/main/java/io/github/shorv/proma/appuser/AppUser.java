@@ -1,6 +1,6 @@
 package io.github.shorv.proma.appuser;
 
-import io.github.shorv.proma.appuser.organization.Organization;
+import io.github.shorv.proma.organization.Organization;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

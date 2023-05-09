@@ -1,4 +1,4 @@
-package io.github.shorv.proma.appuser.organization;
+package io.github.shorv.proma.organization;
 
 public enum Technology {
     JAVA,

@@ -1,11 +1,11 @@
-package io.github.shorv.proma.appuser.organization.employee;
+package io.github.shorv.proma.organization.employee;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.shorv.proma.appuser.AppUser;
-import io.github.shorv.proma.appuser.organization.Organization;
-import io.github.shorv.proma.appuser.organization.Technology;
-import io.github.shorv.proma.appuser.organization.task.Task;
-import io.github.shorv.proma.appuser.organization.team.Team;
+import io.github.shorv.proma.organization.Organization;
+import io.github.shorv.proma.organization.Technology;
+import io.github.shorv.proma.organization.task.Task;
+import io.github.shorv.proma.organization.team.Team;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
